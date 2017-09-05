@@ -37,7 +37,7 @@ class Chore(db.Model):
 def health():
     return 'OK ;)'
 
-@app.route('/messages_callback')
+@app.route('/messages_callback', methods=['GET', 'POST'])
 def messages_callback():
     if request.method == 'GET':
         mode = request.args.get('hub.mode')
