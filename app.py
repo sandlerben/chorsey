@@ -32,6 +32,7 @@ class Chore(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     member_id = db.Column(db.Integer, db.ForeignKey('member.id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
 
 @app.route('/health')
 def health():
