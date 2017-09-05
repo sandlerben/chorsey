@@ -66,7 +66,7 @@ def messages_callback():
         if relevent_member and relevent_member.group is not None:
             message = message_chore_assigned.format(relevent_member.chore.name) \
                       if relevent_member.chore else message_chore_unassigned
-            r = requests.get(
+            r = requests.post(
                 'https://graph.facebook.com/v2.6/me/messages',
                 params={'access_token': os.environ['facebook_access_token']},
                 json={
@@ -105,7 +105,7 @@ def messages_callback():
 
                 message = message_chore_assigned.format(relevent_member.chore.name) \
                           if relevent_member.chore else message_chore_unassigned
-                r = requests.get(
+                r = requests.post(
                     'https://graph.facebook.com/v2.6/me/messages',
                     params={'access_token': os.environ['facebook_access_token']},
                     json={
@@ -118,7 +118,7 @@ def messages_callback():
             else:
                 message = 'You are almost set up! Reply with a secret group \
                            code (someone will give you this).'
-                r = requests.get(
+                r = requests.post(
                     'https://graph.facebook.com/v2.6/me/messages',
                     params={'access_token': os.environ['facebook_access_token']},
                     json={
