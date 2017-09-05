@@ -126,6 +126,7 @@ def messages_callback():
                         'message': {'text': message}
                     }
                 )
+                print(r.json())
                 r.raise_for_status()
 
         return 'OK'
