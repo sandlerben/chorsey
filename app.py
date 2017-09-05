@@ -94,7 +94,7 @@ def messages_callback():
 
         if not relevent_member.group:
             message_text = content['entry'][0]['messaging'][0]['message']['text']
-            matching_group = Group.query.filter_by(secret_code=message_text)
+            matching_group = Group.query.filter_by(secret_code=message_text).first()
 
             if matching_group:
                 relevent_member.group = matching_group
