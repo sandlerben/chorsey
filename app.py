@@ -19,9 +19,9 @@ class Group(db.Model):
     __tablename__ = 'group'
     id = db.Column(db.Integer, primary_key=True)
     secret_code = db.Column(db.String(80), unique=True)
+    rotation_at = db.Column(db.Integer)
     members = db.relationship('Member', backref='group', lazy='select')
     chores = db.relationship('Chore', backref='group', lazy='select')
-    rotation_at = db.Column(db.Integer)
 
 class Member(db.Model):
     __tablename__ = 'member'
