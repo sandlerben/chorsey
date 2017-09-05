@@ -57,10 +57,8 @@ def messages_callback():
         content = request.get_json()
         print(content)
         sender = content['entry'][0]['messaging'][0]['sender']['id']
-        message_chore_assigned = 'You are all set up! Your chore for this week \
-                                  is {}.'
-        message_chore_unassigned = 'You are all set up! You will be assigned a \
-                                    chore soon.'
+        message_chore_assigned = 'You are all set up! Your chore for this week is {}.'
+        message_chore_unassigned = 'You are all set up! You will be assigned a chore soon.'
 
         relevent_member = Member.query.filter_by(member_uuid=sender).first()
         if relevent_member and relevent_member.group is not None:
