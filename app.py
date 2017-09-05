@@ -18,14 +18,15 @@ class Group(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     secret_code = db.Column(db.String(80), unique=True)
-    members = db.relationship('Member', backref='group', lazy='dynamic')
-    chores = db.relationship('Chore', backref='group', lazy='dynamic')
+    members = db.relationship('Member', backref='group', lazy='select')
+    chores = db.relationship('Chore', backref='group', lazy='select')
+    rotation_at = db.Column(db.Integer)
 
 class Member(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     member_uuid = db.Column(db.String(80), unique=True)
     name = db.Column(db.Text)
-    chore = db.relationship('Chore', backref='member', lazy='dynamic')
+    chore = db.relationship('Chore', uselist=False, backref='member', lazy='select')
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
 
 class Chore(db.Model):
