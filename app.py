@@ -93,7 +93,7 @@ def messages_callback():
             db.session.commit()
 
         if not relevent_member.group:
-            message_text = content['message']['text']
+            message_text = content['entry'][0]['messaging'][0]['message']['text']
             matching_group = Group.query.filter_by(secret_code=message_text)
 
             if matching_group:
