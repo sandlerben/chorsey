@@ -29,9 +29,6 @@ class Member(db.Model):
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
 
 class Group(db.Model):
-    """
-    A Group is a set of people and chores.
-    """
     __tablename__ = 'groups'
     id = db.Column(db.Integer, primary_key=True)
     secret_code = db.Column(db.String(80), unique=True)
