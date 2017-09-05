@@ -52,7 +52,6 @@ def messages_callback():
 
     else:
         content = request.get_json()
-        print(content)
         sender = content['entry'][0]['messaging'][0]['sender']['id']
         message_chore_assigned = 'Ok {}, you are all set up! Your chore for this week is {}.'
         message_chore_unassigned = 'Ok {}, you are all set up! You will be assigned a chore soon.'
@@ -121,7 +120,6 @@ def messages_callback():
                         'message': {'text': message}
                     }
                 )
-                print(r.json())
                 r.raise_for_status()
 
         return 'OK'
