@@ -49,6 +49,7 @@ def messages_callback():
 
     else:
         content = request.get_json()
+        print(content)
         sender = content['sender']
         message_chore_assigned = 'You are all set up! Your chore for this week \
                                   is {}.'
