@@ -12,31 +12,31 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
 db = SQLAlchemy(app)
 
 
-class Group(db.Model):
-    """
-    A Group is a set of people and chores.
-    """
-    __tablename__ = 'group'
+class Chore(db.Model):
+    __tablename__ = 'chores'
     id = db.Column(db.Integer, primary_key=True)
-    secret_code = db.Column(db.String(80), unique=True)
-    rotation_at = db.Column(db.Integer)
-    members = db.relationship('Member', backref='group', lazy='select')
-    chores = db.relationship('Chore', backref='group', lazy='select')
+    name = db.Column(db.Text)
+    member_id = db.Column(db.Integer, db.ForeignKey('members.id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
 
 class Member(db.Model):
-    __tablename__ = 'member'
+    __tablename__ = 'members'
     id = db.Column(db.Integer, primary_key=True)
     member_uuid = db.Column(db.String(80), unique=True)
     name = db.Column(db.Text)
     chore = db.relationship('Chore', uselist=False, backref='member', lazy='select')
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
 
-class Chore(db.Model):
-    __tablename__ = 'chore'
+class Group(db.Model):
+    """
+    A Group is a set of people and chores.
+    """
+    __tablename__ = 'groups'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text)
-    member_id = db.Column(db.Integer, db.ForeignKey('member.id'))
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
+    secret_code = db.Column(db.String(80), unique=True)
+    rotation = db.Column(db.Integer)
+    members = db.relationship('Member', backref='group', lazy='select')
+    chores = db.relationship('Chore', backref='group', lazy='select')
 
 @app.route('/health')
 def health():
