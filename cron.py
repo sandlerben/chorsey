@@ -31,7 +31,7 @@ def update_chores():
             )
             r.raise_for_status()
 
-        group.rotation += 1
+        group.rotation = (group.rotation + 1) % len(chores)
         db.session.add(group)
         db.session.commit()
 
