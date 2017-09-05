@@ -1,7 +1,7 @@
 import os
 import requests
 
-from app import app, Group
+from app import Group, db
 
 def update_chores():
     all_groups = Group.query.all()
