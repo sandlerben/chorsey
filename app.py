@@ -57,13 +57,13 @@ def messages_callback():
         content = request.get_json()
         print(content)
         sender = content['entry'][0]['messaging'][0]['sender']['id']
-        message_chore_assigned = 'You are all set up! Your chore for this week is {}.'
-        message_chore_unassigned = 'You are all set up! You will be assigned a chore soon.'
+        message_chore_assigned = 'Ok {}, you are all set up! Your chore for this week is {}.'
+        message_chore_unassigned = 'Ok {}, you are all set up! You will be assigned a chore soon.'
 
         relevent_member = Member.query.filter_by(member_uuid=sender).first()
         if relevent_member and relevent_member.group is not None:
-            message = message_chore_assigned.format(relevent_member.chore.name) \
-                      if relevent_member.chore else message_chore_unassigned
+            message = message_chore_assigned.format(relevent_member.name, relevent_member.chore.name) \
+                      if relevent_member.chore else message_chore_unassigned.format(relevent_member.name)
             r = requests.post(
                 'https://graph.facebook.com/v2.6/me/messages',
                 params={'access_token': os.environ['facebook_access_token']},
@@ -101,8 +101,8 @@ def messages_callback():
                 db.session.add(relevent_member)
                 db.session.commit()
 
-                message = message_chore_assigned.format(relevent_member.chore.name) \
-                          if relevent_member.chore else message_chore_unassigned
+                message = message_chore_assigned.format(relevent_member.name, relevent_member.chore.name) \
+                          if relevent_member.chore else message_chore_unassigned.format(relevent_member.name)
                 r = requests.post(
                     'https://graph.facebook.com/v2.6/me/messages',
                     params={'access_token': os.environ['facebook_access_token']},
