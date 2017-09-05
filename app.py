@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 db = SQLAlchemy(app)
@@ -17,12 +18,13 @@ class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     secret_code = db.Column(db.String(80), unique=True)
     members = db.relationship('Member', backref='group', lazy='dynamic')
+    chores = db.relationship('Chore', backref='group', lazy='dynamic')
 
 class Member(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     member_uuid = db.Column(db.String(80), unique=True)
     name = db.Column(db.Text)
-    chore = db.relationship('Chore', backref='group', lazy='dynamic')
+    chore = db.relationship('Chore', backref='member', lazy='dynamic')
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
 
 class Chore(db.Model):
@@ -54,7 +56,7 @@ def messages_callback():
 
         relevent_member = Member.query.filter_by(member_uuid=sender).first()
         if relevent_member and relevent_member.group is not None:
-            message = message_chore_assigned.format(relevent_member.chore.name)} \
+            message = message_chore_assigned.format(relevent_member.chore.name) \
                       if relevent_member.chore else message_chore_unassigned
             requests.get(
                 'https://graph.facebook.com/v2.6/me/messages',
@@ -91,7 +93,7 @@ def messages_callback():
                 db.session.add(relevent_member)
                 db.session.commit()
 
-                message = message_chore_assigned.format(relevent_member.chore.name)} \
+                message = message_chore_assigned.format(relevent_member.chore.name) \
                           if relevent_member.chore else message_chore_unassigned
                 requests.get(
                     'https://graph.facebook.com/v2.6/me/messages',
