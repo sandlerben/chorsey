@@ -16,6 +16,7 @@ class Group(db.Model):
     """
     A Group is a set of people and chores.
     """
+    __tablename__ = 'group'
     id = db.Column(db.Integer, primary_key=True)
     secret_code = db.Column(db.String(80), unique=True)
     members = db.relationship('Member', backref='group', lazy='select')
@@ -23,6 +24,7 @@ class Group(db.Model):
     rotation_at = db.Column(db.Integer)
 
 class Member(db.Model):
+    __tablename__ = 'member'
     id = db.Column(db.Integer, primary_key=True)
     member_uuid = db.Column(db.String(80), unique=True)
     name = db.Column(db.Text)
@@ -30,6 +32,7 @@ class Member(db.Model):
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
 
 class Chore(db.Model):
+    __tablename__ = 'chore'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     member_id = db.Column(db.Integer, db.ForeignKey('member.id'))
