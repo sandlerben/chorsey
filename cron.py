@@ -1,5 +1,6 @@
 import os
 import requests
+import random
 
 from app import Group, db
 
@@ -19,8 +20,10 @@ def update_chores():
             db.session.add(member)
         db.session.commit()
 
+        smileys = [':)', ':O', ':P', 'O:)', ':D', '¯\_(ツ)_/¯']
         for member in members:
-            message = 'Hey {}! Your chore this week is {}. Good luck :)'.format(member.name, member.chore.name)
+            smiley = random.choice(smileys)
+            message = 'Hey {}! Your chore this week is {}. Good luck {}'.format(member.name, member.chore.name, smiley)
             r = requests.post(
                 'https://graph.facebook.com/v2.6/me/messages',
                 params={'access_token': os.environ['facebook_access_token']},
