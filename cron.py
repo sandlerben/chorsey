@@ -23,7 +23,12 @@ def update_chores():
         smileys = [':)', ':O', ':P', 'O:)', ':D', '¯\_(ツ)_/¯']
         for member in members:
             smiley = random.choice(smileys)
-            message = 'Hey {}! Your chore this week is {}. Good luck {}'.format(member.name, member.chore.name, smiley)
+            message = 'Hey {}! Your chore this week is {}. Good luck {}\n\n'.format(member.name, member.chore.name, smiley)
+            message += 'Everyone else\'s chore is:\n'
+
+            other_members = set(members) - set(member)
+            message += ''.join(['\t{}: {}'.format(m.name, m.chore.name) for m in other_members])
+
             r = requests.post(
                 'https://graph.facebook.com/v2.6/me/messages',
                 params={'access_token': os.environ['facebook_access_token']},
