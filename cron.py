@@ -26,7 +26,7 @@ def update_chores():
             message = 'Hey {}! Your chore this week is {}. Good luck {}\n\n'.format(member.name, member.chore.name, smiley)
             message += 'Everyone else\'s chore is:\n'
 
-            other_members = set(members) - set(member)
+            other_members = set(members) - set([member])
             message += ''.join(['\t{}: {}'.format(m.name, m.chore.name) for m in other_members])
 
             r = requests.post(
