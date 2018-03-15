@@ -27,7 +27,7 @@ def update_chores():
             message += 'Everyone else\'s chore is:\n'
 
             other_members = set(members) - set([member])
-            message += ''.join(['\t{}: {}'.format(m.name, m.chore.name) for m in other_members])
+            message += ''.join(['\t{}: {}\n'.format(m.name, m.chore.name) for m in other_members])
 
             r = requests.post(
                 'https://graph.facebook.com/v2.6/me/messages',
