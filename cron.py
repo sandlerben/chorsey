@@ -12,13 +12,13 @@ def update_chores():
         chores = group.chores
         rotation = group.rotation
 
-        # chores_rotated = chores[rotation:] + chores[:rotation]
-        # for i, member in enumerate(members):
-        #     if i == len(chores):
-        #         break
-        #     member.chore = chores_rotated[i]
-        #     db.session.add(member)
-        # db.session.commit()
+        chores_rotated = chores[rotation:] + chores[:rotation]
+        for i, member in enumerate(members):
+            if i == len(chores):
+                break
+            member.chore = chores_rotated[i]
+            db.session.add(member)
+        db.session.commit()
 
         smileys = [':)', ':O', ':P', 'O:)', ':D', '¯\_(ツ)_/¯']
         for member in members:
