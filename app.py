@@ -3,6 +3,7 @@ import requests
 
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 app = Flask(__name__)
@@ -10,6 +11,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 class Chore(db.Model):
