@@ -34,6 +34,7 @@ class Group(db.Model):
     rotation = db.Column(db.Integer)
     members = db.relationship('Member', backref='group', lazy='select')
     chores = db.relationship('Chore', backref='group', lazy='select')
+    active = db.Column(db.Boolean, default=True)
 
 @app.route('/health')
 def health():

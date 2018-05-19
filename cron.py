@@ -5,7 +5,7 @@ import random
 from app import Group, db
 
 def update_chores():
-    all_groups = Group.query.all()
+    all_groups = Group.query.filter_by(active=True).all()
     for group in all_groups:
         print('Updating group {}'.format(group.secret_code))
         members = group.members
